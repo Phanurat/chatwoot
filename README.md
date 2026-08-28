@@ -137,3 +137,44 @@ Thanks goes to all these [wonderful people](https://www.chatwoot.com/docs/contri
 
 
 *Chatwoot* &copy; 2017-2026, Chatwoot Inc - Released under the MIT License.
+
+
+# Install By Phanurat
+file .env
+```sh
+# Domain Settings
+FRONTEND_URL=https://chat.smartagritech.co.th
+
+# Database
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=database
+POSTGRES_USER=database
+POSTGRES_PASSWORD=YOUR_POSTGRES_PASSWORD
+
+# Redis
+REDIS_URL=redis://:YOUR_REDIS_PASSWORD@redis:6379
+
+# Facebook Integration (Meta App)
+FB_APP_ID=YOUR_FB_APP_ID
+FB_APP_SECRET=YOUR_FB_APP_SECRET
+FB_VERIFY_TOKEN=YOUR_CUSTOM_VERIFY_TOKEN
+```
+## Install in Docker compose
+```sh
+# 1. Start Postgres & Redis
+sudo docker compose -f docker-compose.production.yaml up -d postgres redis
+
+# 2. Run Database Migration & Initial Setup
+sudo docker compose -f docker-compose.production.yaml run --rm rails bundle exec rails db:chatwoot_prepare
+
+# 3. Start All Services
+sudo docker compose -f docker-compose.production.yaml up -d
+
+```
+
+## Restart Service Webapp
+```sh
+sudo docker compose -f docker-compose.production.yaml restart rails sidekiq
+```
+
